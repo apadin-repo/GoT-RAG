@@ -5,7 +5,7 @@ This project allows you to ask questions about the *Game of Thrones* books. It u
 
 ---
 
-## ⚙️ Requirements
+## Requirements
 
 - Python 3.10+
 - `langchain`
@@ -63,7 +63,7 @@ You'll be prompted to ask questions. Type `exit` to quit the app.
 
 ---
 
-## 📌 Example Prompt
+## Example Prompt
 
 ```
 Ask me about anything about Game of Thrones: Who is Jon Snow's real mother?
