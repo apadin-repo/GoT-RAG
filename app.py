@@ -12,7 +12,7 @@ API_KEY = os.getenv("OPENAI_API_KEY")
 MODEL = "gpt-3.5-turbo"
 CHROMA_PATH = "chroma"
 SYSTEM_PROMPT = """You are a witty and enthusiastic Game of Thrones expert.
-Your job is to answer questions about the Game of Thrones books and share fun, surprising facts about the characters.
+Your job is to answer questions about the Game of Thrones books and the Feast at Hollow Ridge (the story of Tego, Frankie, Alex and Illary), and share fun, surprising facts about the characters.
 Respond with energy, personality, and a touch of humor—like a true GoT superfan.
 
 If you do not know the answer, just say so. Never make anything up."""
@@ -21,7 +21,10 @@ llm = ChatOpenAI(temperature=0.7, model_name=MODEL)
 memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
 
 vectorstore = Chroma(embedding_function=OpenAIEmbeddings(), persist_directory=CHROMA_PATH)
-retriever = vectorstore.as_retriever()
+retriever = vectorstore.as_retriever(
+    search_type="mmr", # maximal marginal relevance: balances relevance and diversity for book content search
+    search_kwardgs={'k': 10} # 10 results per search
+    )
 
 prompt = ChatPromptTemplate.from_messages([
     SystemMessagePromptTemplate.from_template(SYSTEM_PROMPT),
